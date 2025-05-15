@@ -1,0 +1,64 @@
+{
+    "_comment": "这是一个配置文件。RAG数据路径为data_path,RAG通过LabelGenerator生成的COT数据cot_path，质检算子对cot_path数据评分输出intermediate_path，最后过滤RAG通过LabelGenerator生成的COT数据cot_path，质检算子对cot_path数据评分输出intermediate_path，最后过滤intermediate_path数据得到best数据",
+
+    "data_path": "/lustre/project-A/sourcecode/hongji/Fin_Cot_Eval/data1/test.xlsx",
+    "cot_path":"/lustre/project-A/sourcecode/hongji/Fin_Cot_Eval/testpipeline/output/cot_results.csv",
+    "intermediate_path":"/lustre/project-A/sourcecode/hongji/Fin_Cot_Eval/testpipeline/output/intermediate_results.csv",
+    "output_csv": "/lustre/project-A/sourcecode/hongji/Fin_Cot_Eval/testpipeline/output/best.csv",
+
+    "checkers": [
+      {
+        "class_name": "LabelGenerator",
+        "methods": [
+          {
+            "method_name": "QA_difficulty",
+            "enabled": false,
+            "params": { "attempts": 5 }
+          },
+          {
+            "method_name": "LT_difficulty",
+            "enabled": true,
+            "params": { "attempts": 5 }
+          }
+        ]
+      },
+      {
+        "class_name": "FormatChecker",
+        "methods": [
+          { "method_name": "check_think", "enabled": true, "params": { "threshold": 0.6 }},
+          { "method_name": "check_answer", "enabled": true}
+        ]
+      },
+      {
+        "class_name": "LogicChecker",
+        "methods": [
+          { "method_name": "check", "enabled": true }
+        ]
+      },
+      {
+        "class_name": "ReflectionChecker",
+        "methods": [
+          { "method_name": "check", "enabled": true }
+        ]
+      },
+      {
+        "class_name": "CorrectnessChecker",
+        "methods": [
+          { "method_name": "check", "enabled": false },
+          { "method_name": "compare_answers", "enabled": true }
+        ]
+      },
+      {
+        "class_name": "Filter",
+        "methods": [
+          {
+            "method_name": "filter",
+            "enabled": true,
+            "params": {
+              "weights": [0.15, 0.1, 0.1, 0.01, 0.59, 0.05]
+            }
+          }
+        ]
+      }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "examples": [
+      {
+        "question": "示例文本 <think>这里是思考过程</think> <answer>答案1</answer>",
+        "passage":"",
+        "reference_answer": "答案1"
+      },
+      {
+        "question": "another text <think>reflection about something</think> <answer>答案2</answer>",
+        "passage":"",
+        "reference_answer": "答案2"
+      }
+    ]
+  }
+  
